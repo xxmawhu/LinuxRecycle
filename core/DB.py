@@ -11,10 +11,15 @@
 #   Describe      :
 #
 # ====================================================
+"""usage: DB.py
+some functions to operate the data base
+1.insertDB(var type: list of tuple)
+  insert some information to the data base
+"""
 
 import sqlite3
 from sqlite3 import OperationalError
-import os
+# import os
 import time
 import config
 query = """
@@ -32,8 +37,8 @@ def initDB():
         cursor = conn.cursor()
         cursor.execute(query)
         conn.commit()
-    except Exception as e:
-        pass
+    # except Exception:
+    #    pass
     finally:
         conn.close()
     return
@@ -46,14 +51,11 @@ def lastID():
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM fileInfo ORDER BY id DESC limit 1")
         rows = cursor.fetchall()
-        if len(rows) != 0:
+        if rows:
             ID = rows[0][0]
-    except Exception as e:
-        print "<last ID>", e
-        pass
     finally:
         conn.close()
-        return ID
+    return ID
 
 
 def insertDB(information):
@@ -87,6 +89,9 @@ def insertDB(information):
 
 
 def getAllInf():
+    """
+    get all information from the data base
+    """
     con = sqlite3.connect(config.db)
     cursor = con.cursor()
     cursor = con.execute("SELECT * FROM fileInfo")
