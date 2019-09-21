@@ -1,0 +1,138 @@
+#!/usr/bin/env python
+# encoding: utf-8
+# ====================================================
+#   Copyright (C)2019 All rights reserved.
+#
+#   Author        : Xin-Xin MA
+#   Email         : xxmawhu@163.com
+#   File Name     : DB.py
+#   Created Time  : 2019-09-19 16:31
+#   Last Modified : 2019-09-19 19:46
+#   Describe      :
+#
+# ====================================================
+
+import sqlite3
+from sqlite3 import OperationalError
+import os
+import time
+import config
+query = """
+CREATE TABLE IF NOT EXISTS fileInfo
+(id int, 
+ address text, 
+ trashAddress text, type text,
+time real, date text, exits text)
+"""
+
+
+def initDB():
+    conn = sqlite3.connect(config.db, timeout=30.0)
+    try:
+        cursor = conn.cursor()
+        cursor.execute(query)
+        conn.commit()
+    except Exception as e:
+        pass
+    finally:
+        conn.close()
+    return
+
+
+def lastID():
+    conn = sqlite3.connect(config.db, timeout=30.0)
+    ID = 0
+    try:
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM fileInfo ORDER BY id DESC limit 1")
+        rows = cursor.fetchall()
+        if len(rows) != 0:
+            ID = rows[0][0]
+    except Exception as e:
+        print "<last ID>", e
+        pass
+    finally:
+        conn.close()
+        return ID
+
+
+def insertDB(information):
+    # add ID
+    ID = lastID() + 1
+    # print ID
+    IDinfo = []
+    for indx, item in enumerate(information):
+        # print "id:", indx, "item",  item
+        IDinfo.append((ID + indx, ) + item)
+    con = sqlite3.connect(config.db, timeout=30.0)
+    insertmt = 'INSERT INTO fileInfo VALUES(?, ?, ?, ?, ?, ?, ?)'
+    # print IDinfo
+    cursor = con.cursor()
+    try:
+        cursor.executemany(insertmt, IDinfo)
+        con.commit()
+    except OperationalError as e:
+        if "database is locked" in e:
+            print "fun<insertDB>", "OperationalError :", e
+            insertDB(information)
+        if "no such table" in e:
+            print "OperationalError :", e
+            cursor.execute(query)
+            cursor.executemany(insertmt, IDinfo)
+            con.commit()
+    except Exception as e:
+        print "fun<insertDB>", e
+    finally:
+        con.close()
+
+
+def getAllInf():
+    con = sqlite3.connect(config.db)
+    cursor = con.cursor()
+    cursor = con.execute("SELECT * FROM fileInfo")
+    rows = cursor.fetchall()
+    return rows
+
+
+def clearDB():
+    con = sqlite3.connect(config.db)
+    delQuery = "DELETE from fileInfo"
+    try:
+        cursor = con.cursor()
+        cursor.execute(delQuery)
+        con.commit()
+    except Exception as e:
+        print "fun<clearDB>", e
+    finally:
+        con.close()
+
+
+def delByID(Id):
+    con = sqlite3.connect(config.db)
+    try:
+        cursor = con.cursor()
+        delQuery = "DELETE from fileInfo WHERE id=?"
+        cursor.execute(delQuery, (Id, ))
+        con.commit()
+    except Exception as e:
+        print "fun<delByID>", e
+    finally:
+        con.close()
+
+
+# initi the fileInfo.config.db
+initDB()
+if __name__ == "__main__":
+    #os.system("rm ~/.mtbd/fileInfo.config.db")
+    #initDB()
+    clearDB()
+    print lastID()
+    #print getAllInf()
+    insertDB([("dada", "dada", "1", time.time(), "2019", "exits")
+              for i in range(30)])
+    delByID(30)
+    clearDB()
+
+    for inf in getAllInf():
+        print inf
+    print lastID()
