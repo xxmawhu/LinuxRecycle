@@ -5,6 +5,7 @@ import time
 if __name__ == "__main__":
     #os.system("rm ~/.mtbd/fileInfo.db")
     #initDB()
-    print DB.lastID()
+    # print DB.lastID()
     for inf in DB.getAllInf():
-        print inf
+        date=time.asctime(time.localtime(inf[4])).replace("Sat", "@")
+        print inf[0], inf[1] ,date

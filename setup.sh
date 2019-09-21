@@ -31,5 +31,10 @@ if [ -e "${MTSYS}"/bin/rm ]
 then
     /bin/rm -rf "${MTSYS}"/bin/rm
 fi
+if [ -e "${MTSYS}"/bin/printDB ] 
+then
+    /bin/rm -rf "${MTSYS}"/bin/printDB
+fi
 ln -s  "${MTSYS}"/core/main.py "${MTSYS}"/bin/rm
+ln -s  "${MTSYS}"/core/printDB.py "${MTSYS}"/bin/printDB
 export PATH="${MTSYS}/bin":$PATH
