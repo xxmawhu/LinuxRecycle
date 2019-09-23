@@ -82,8 +82,8 @@ def insertDB(information):
             cursor.execute(query)
             cursor.executemany(insertmt, IDinfo)
             con.commit()
-    except Exception as e:
-        print "fun<insertDB>", e
+    # except Exception as e:
+    #    print "fun<insertDB>", e
     finally:
         con.close()
 
@@ -106,21 +106,27 @@ def clearDB():
         cursor = con.cursor()
         cursor.execute(delQuery)
         con.commit()
-    except Exception as e:
-        print "fun<clearDB>", e
+    # except Exception as e:
+    #     print "fun<clearDB>", e
     finally:
         con.close()
 
 
 def delByID(Id):
+    """
+    Args:
+        Id: the Index the the one creod 
+    return:
+        void
+    """
     con = sqlite3.connect(config.db)
     try:
         cursor = con.cursor()
         delQuery = "DELETE from fileInfo WHERE id=?"
         cursor.execute(delQuery, (Id, ))
         con.commit()
-    except Exception as e:
-        print "fun<delByID>", e
+    # except Exception as e:
+    #    print "fun<delByID>", e
     finally:
         con.close()
 
