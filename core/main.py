@@ -55,6 +55,9 @@ def test(f):
         f.append(i)
     # print len(f)
 
+def main():
+    with concurrent.futures.ProcessPoolExecutor(max_workers=20) as executor:
+        executor.map(Rm, obtainAllFile())
 
 if __name__ == "__main__":
     with concurrent.futures.ProcessPoolExecutor(max_workers=20) as executor:
