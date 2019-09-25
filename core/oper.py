@@ -32,8 +32,12 @@ def RmForce(fileName):
         Type = 'd'
     try:
         os.remove(address)
-    except Exception, e:
-        print e
+    except OSError as e:
+        if e.args[0] == 21:
+            shutil.rmtree(address)
+        else:
+            print "RmForce"
+            raise e
         pass
     finally:
         return (address, "", Type, time.time(), date, exits)
