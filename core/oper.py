@@ -28,12 +28,12 @@ def RmForce(fileName):
     exits = "removed"
     Type = 'f'
     date = time.strftime("%Y-%m-%d:%H:%M:%S", time.localtime())
-    if os.path.isdir(fileName):
-        Type = 'd'
     try:
         os.remove(address)
     except OSError as e:
+        # [Error 21] Is directory: ...
         if e.args[0] == 21:
+            Type = 'd'
             shutil.rmtree(address)
         else:
             print "RmForce"
