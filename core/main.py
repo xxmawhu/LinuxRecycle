@@ -23,20 +23,17 @@ import config
 rmForce = False
 if '-f' in argv.opt:
     rmForce = True
-logCol = []
 
 
 def Rm(afile):
-    # global logCol
-    log = ()
+    # rm one file for use of pool.map
+    # rm_status is the status of oprater 'mv' or 'rm'
+    rm_status = ()
     if rmForce:
-        log = oper.RmForce(afile)
+        rm_status = oper.RmForce(afile)
     else:
-        log = oper.MoveToTrash(afile)
-    # print "log", log
-    # logCol.append(log)
-    if config.keepDB:
-        DB.insertDB([log])
+        rm_status = oper.MoveToTrash(afile)
+    return rm_status
 
 
 def obtainAllFile():
@@ -56,16 +53,12 @@ def test(f):
     # print len(f)
 
 def main():
-    with concurrent.futures.ProcessPoolExecutor(max_workers=20) as executor:
-        executor.map(Rm, obtainAllFile())
+    executor = Pool(argv.core)
+    logs  =  executor.map(Rm, obtainAllFile())
+    executor.close()
+    executor.join() 
+    DB.insertDB(logs)
 
 if __name__ == "__main__":
-    with concurrent.futures.ProcessPoolExecutor(max_workers=20) as executor:
-        executor.map(Rm, obtainAllFile())
-        exit()
-    #
-    executor = Pool(argv.core)
-    executor.map(Rm, obtainAllFile())
-    executor.close()
-    #print logCol
-    # executor.map(test, range(600))
+    main()
+    exit(0)
