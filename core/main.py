@@ -11,7 +11,6 @@
 #   Describe      :
 #
 # ====================================================
-import concurrent.futures
 from multiprocessing import Pool
 import argv
 import DB
@@ -46,11 +45,12 @@ def obtainAllFile():
 # print obtainAllFile()
 
 
-def test(f):
-    f = []
-    for i in range(1000000):
-        f.append(i)
-    # print len(f)
+def test():
+    executor = Pool(local_config.getint('core', 'Num_Processor'))
+    logs  =  executor.map(Rm, ['LinuxRecycle.egg-info', 'build'])
+    executor.close()
+    executor.join() 
+    DB.insertDB(logs)
 
 def main():
     executor = Pool(local_config.getint('core', 'Num_Processor'))
@@ -58,7 +58,6 @@ def main():
     executor.close()
     executor.join() 
     DB.insertDB(logs)
-
 if __name__ == "__main__":
     main()
     exit(0)
