@@ -14,7 +14,7 @@
 import sys
 import os
 import argv
-import config
+from config import local_config
 
 
 def getTrashAddress(afileName):
@@ -47,7 +47,7 @@ def tmpFile(afileName):
     True if the file is fileInfo.db
     """
     tak = afileName.split("/")[1]
-    if afileName in config.tmpFile:
+    if afileName in ['tmp']:
         return True
     return False
 
@@ -57,7 +57,7 @@ def whiteFile(afileName):
     True if the in /tmp/...
     """
     tak = afileName.split("/")[1]
-    if tak in config.whiteList:
+    if tak in local_config['core']['white_files'].split(','):
         return True
     return False
 

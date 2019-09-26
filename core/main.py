@@ -7,7 +7,7 @@
 #   Email         : xxmawhu@163.com
 #   File Name     : main.py
 #   Created Time  : 2019-09-19 19:46
-#   Last Modified : 2019-09-19 19:46
+#   Last Modified : 2019-09-26 15:38
 #   Describe      :
 #
 # ====================================================
@@ -19,7 +19,7 @@ import oper
 import glob
 import time
 import sys
-import config
+from config import local_config
 rmForce = False
 if '-f' in argv.opt:
     rmForce = True
@@ -53,7 +53,7 @@ def test(f):
     # print len(f)
 
 def main():
-    executor = Pool(argv.core)
+    executor = Pool(local_config.getint('core', 'Num_Processor'))
     logs  =  executor.map(Rm, obtainAllFile())
     executor.close()
     executor.join() 

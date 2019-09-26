@@ -21,7 +21,7 @@ import sqlite3
 from sqlite3 import OperationalError
 # import os
 import time
-import config
+from config import local_config
 query = """
 CREATE TABLE IF NOT EXISTS fileInfo
 (id int, 
@@ -32,7 +32,8 @@ time real, date text, exits text)
 
 
 def initDB():
-    conn = sqlite3.connect(config.db, timeout=30.0)
+    conn = sqlite3.connect(local_config.get('core', 'data_base_file'),
+            timeout=30.0)
     try:
         cursor = conn.cursor()
         cursor.execute(query)
@@ -45,7 +46,8 @@ def initDB():
 
 
 def lastID():
-    conn = sqlite3.connect(config.db, timeout=30.0)
+    conn = sqlite3.connect(local_config.get('core', 'data_base_file'),
+            timeout=30.0)
     ID = 0
     try:
         cursor = conn.cursor()
@@ -66,13 +68,13 @@ def insertDB(information):
     for indx, item in enumerate(information):
         # print "id:", indx, "item",  item
         IDinfo.append((ID + indx, ) + item)
-    con = sqlite3.connect(config.db, timeout=30.0)
+    conn = sqlite3.connect(local_config.get('core', 'data_base_file'),
+            timeout=30.0)
     insertmt = 'INSERT INTO fileInfo VALUES(?, ?, ?, ?, ?, ?, ?)'
     # print IDinfo
-    cursor = con.cursor()
+    cursor = conn.cursor()
     try:
         cursor.executemany(insertmt, IDinfo)
-        con.commit()
     except OperationalError as e:
         if "database is locked" in e:
             print "fun<insertDB>", "OperationalError :", e
@@ -81,18 +83,21 @@ def insertDB(information):
             print "OperationalError :", e
             cursor.execute(query)
             cursor.executemany(insertmt, IDinfo)
-            con.commit()
+            conn.commit()
     # except Exception as e:
     #    print "fun<insertDB>", e
     finally:
-        con.close()
+        conn.commit()
+        cursor.close()
+        conn.close()
 
 
 def getAllInf():
     """
     get all information from the data base
     """
-    con = sqlite3.connect(config.db)
+    con = sqlite3.connect(local_config.get('core', 'data_base_file'),
+            timeout=30.0)
     cursor = con.cursor()
     cursor = con.execute("SELECT * FROM fileInfo")
     rows = cursor.fetchall()
@@ -100,7 +105,8 @@ def getAllInf():
 
 
 def clearDB():
-    con = sqlite3.connect(config.db)
+    con = sqlite3.connect(local_config.get('core', 'data_base_file'),
+            timeout=30.0)
     delQuery = "DELETE from fileInfo"
     try:
         cursor = con.cursor()
@@ -119,7 +125,8 @@ def delByID(Id):
     return:
         void
     """
-    con = sqlite3.connect(config.db)
+    con = sqlite3.connect(local_config.get('core', 'data_base_file'),
+            timeout=30.0)
     try:
         cursor = con.cursor()
         delQuery = "DELETE from fileInfo WHERE id=?"

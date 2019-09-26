@@ -7,14 +7,26 @@
 #   Email         : xxmawhu@163.com
 #   File Name     : config.py
 #   Created Time  : 2019-09-19 23:52
-#   Last Modified : 2019-09-21 15:42
+#   Last Modified : 2019-09-26 16:00
 #   Describe      :
 #
 # ====================================================
 import os
-db = os.path.expanduser("~/.mtdb/fileInfo.db")
+from configparser import ConfigParser
+local_config = ConfigParser()
+if os.path.exists(os.path.expanduser('~/.mtdb/mtrc')):
+    local_config.read(os.path.expanduser('~/.mtdb/mtrc'))
+else:
+    local_config.add_section('core')
+    local_config.set('core', 'Num_Processor', "100")
+    local_config.set('core', 'Keep_data_base', "1")
+    local_config.set('core', 'data_base_file', 
+            os.path.expanduser("~/.mtdb/fileInfo.db"))
+    local_config.set('core', 'white_files', 
+            os.path.expanduser("~/.mtdb/fileInfo.db")+',')
+    with open(os.path.expanduser('~/.mtdb/mtrc'), 'w') as configFile:
+        local_config.write(configFile)
+
 user = os.environ["USER"]
-db = "/tmp/fileInfo{}.db".format(user)
-whiteList = [db]
-tmpFile = ['tmp']
-keepDB = True
+
+# print local_config.get('core', 'white_file')
