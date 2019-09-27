@@ -7,7 +7,7 @@
 #   Email         : xxmawhu@163.com
 #   File Name     : DB.py
 #   Created Time  : 2019-09-19 16:31
-#   Last Modified : 2019-09-19 19:46
+#   Last Modified : 2019-09-27 14:45
 #   Describe      :
 #
 # ====================================================
@@ -103,6 +103,18 @@ def getAllInf():
     rows = cursor.fetchall()
     return rows
 
+def getLastRecord(n):
+    """
+    get the record of last #n
+    """
+    con = sqlite3.connect(local_config.get('core', 'data_base_file'),
+            timeout=30.0)
+    cursor = con.cursor()
+    cursor.execute("SELECT * FROM fileInfo ORDER BY id DESC limit {}".format(n))
+    rows = cursor.fetchall()
+    cursor.close()
+    con.close()
+    return rows
 
 def clearDB():
     con = sqlite3.connect(local_config.get('core', 'data_base_file'),
