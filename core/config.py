@@ -20,6 +20,7 @@ else:
     local_config.add_section('core')
     local_config.set('core', 'Num_Processor', "100")
     local_config.set('core', 'Keep_data_base', "1")
+    local_config.set('core', 'keep_days', "30")
     local_config.set('core', 'data_base_file', 
             os.path.expanduser("~/.mtdb/fileInfo.db"))
     local_config.set('core', 'white_files', 
@@ -28,5 +29,8 @@ else:
         local_config.write(configFile)
 
 user = os.environ["USER"]
-
+if __name__ == "__main__":
+    print local_config['core']['Num_Processor']
+    print local_config['core']['keep_days']
+    print local_config['core']['data_base_file']
 # print local_config.get('core', 'white_file')
