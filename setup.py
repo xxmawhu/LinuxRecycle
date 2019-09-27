@@ -6,7 +6,7 @@
 #   Email         : xxmawhu@163.com
 #   File Name     : setup.py
 #   Created Time  : 2019-09-24 10:51
-#   Last Modified : 2019-09-24 10:51
+#   Last Modified : 2019-09-27 19:31
 #   Describe      :
 #
 # ====================================================
@@ -20,6 +20,8 @@ setup(
     author='Xin-Xin Ma',
     packages=find_packages(),
     entry_points={
-        'console_scripts':['rm=core.main:main',]
+        'console_scripts':['rm=core.main:main', 
+            'rm.printDB=core.printDB:main',
+            'rm.recover=core.recover:main']
         }
 )

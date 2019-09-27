@@ -32,12 +32,21 @@ def recover(ID):
     finally:
         pass
 
+def init():
+    """
+    show the help
+    """
+    if '-h'  in sys.argv[1:]:
+        print "usage: recover id1 [id2 id3]"
+        exit(0)
+    return
 
 def main():
     '''
     usage:
        recover id1 [id2 id3]
     '''
+    init()
     for ID in list(map(int, sys.argv[1:])):
         recover(ID)
 if __name__ == "__main__":
