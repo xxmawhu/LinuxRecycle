@@ -16,11 +16,21 @@ import DB
 import time
 import sys
 from termcolor import colored
+def init():
+    """
+    show help 
+    """
+    if '-h' in sys.argv[1:]:
+        print "usage : show the last #n records" 
+        print "    rm.printDB n" 
+        exit(0)
+    return
 def main():
     '''
     function:
         print the last #n record information about the files deleted
     '''
+    init()
     n = 100
     try:
         n = int(sys.argv[1])
