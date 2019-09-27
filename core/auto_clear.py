@@ -13,7 +13,7 @@
 # ====================================================
 import time
 import sqlite3
-imort shutil
+import shutil
 from config import local_config
 def delete_old_file(raws):
     """

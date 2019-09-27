@@ -14,6 +14,9 @@
 from setuptools import setup
 from setuptools import find_packages
 import core
+import subprocess
+pr = subprocess.Popen(['sh', 'setup.sh'])
+out , err = pr.communicate()
 setup(
     name='LinuxRecycle',
     version='1.0',
