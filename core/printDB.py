@@ -15,6 +15,7 @@
 import DB
 import time
 import sys
+from termcolor import colored
 def main():
     '''
     function:
@@ -30,6 +31,7 @@ def main():
         raise e
     for inf in sorted( DB.getLastRecord(n), key=lambda x:x[0]):
         date = time.asctime(time.localtime(inf[4])).replace("Sat", "@")
-        print inf[0], inf[1], date
+        print colored(inf[0], 'blue','on_grey', attrs=['bold']), colored(date,'green'
+                ), inf[1]
 if __name__ == "__main__":
     main()

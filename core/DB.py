@@ -115,7 +115,19 @@ def getLastRecord(n):
     cursor.close()
     con.close()
     return rows
-
+def get_record_by_id(ID):
+    """
+    get the record with certain ID 
+    """
+    con = sqlite3.connect(local_config.get('core', 'data_base_file'))
+    try:
+        cursor = con.cursor()
+        cursor.execute("SELECT * FROM fileInfo WHERE id = {}".format(ID))
+        rows = cursor.fetchall()
+    finally:
+        cursor.close()
+    con.close()
+    return rows
 def clearDB():
     con = sqlite3.connect(local_config.get('core', 'data_base_file'),
             timeout=30.0)
@@ -153,16 +165,10 @@ def delByID(Id):
 # initi the fileInfo.config.db
 initDB()
 if __name__ == "__main__":
-    #os.system("rm ~/.mtbd/fileInfo.config.db")
-    #initDB()
-    clearDB()
     print lastID()
-    #print getAllInf()
-    insertDB([("dada", "dada", "1", time.time(), "2019", "exits")
-              for i in range(30)])
-    delByID(30)
-    clearDB()
 
     for inf in getAllInf():
         print inf
     print lastID()
+    print get_record_by_id(1)
+
