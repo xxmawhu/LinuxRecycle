@@ -23,22 +23,31 @@ def delete_old_file(raws):
     """
     for info in raws:
         file_name = info[2]
+        # print file_name
         if info[3] != 'd':
-            os.remove(file_name)
+            try:
+                os.remove(file_name)
+            except OSError as e:
+                pass
         else:
-            os.rmdir(file_name)
+            try:
+                os.rmdir(file_name)
+            except OSError as e:
+                pass
     return
 
-def update(raws):
+def update(rows):
     """
     func: update the record information to 'removed'
     """
-    update_state = 'UPDATE fileInfo SET exists="removed" WHERE id=?' 
+    update_state = 'UPDATE fileInfo SET exits="removed" WHERE id==?;' 
     conn = sqlite3.connect(local_config.get('core', 'data_base_file'))
     try:
         cursor = conn.cursor()
-        cursor.executemany(update_state, [i[0] for i in raws])
-        rows = cursor.fetchall()
+        # print [int(i[0]) for i in rows]
+        cursor.executemany(update_state, [(str(i[0])) for i in rows])
+        # rows = cursor.fetchall()
+        conn.commit()
     finally:
         cursor.close()
         conn.close()
@@ -50,15 +59,17 @@ def main():
     """
     conn = sqlite3.connect(local_config.get('core', 'data_base_file'))
     t0 = time.time() - 3600.0 * 24.0 *  local_config.getint('core', 'keep_days')
-    query = 'SELECT * FROM fileInfo WHERE  time < {} AND exists="exists"'.format(t0)
+    t0 = time.time() - 3600.0 * 24.0 *  1.0 #local_config.getint('core', 'keep_days')
+    query = 'SELECT * FROM fileInfo WHERE  time < {} AND exits!="removed"'.format(t0)
     raws=[]
     try:
         cursor = conn.cursor()
         cursor.execute(query)
-        rows = cursor.fetchall()
+        raws = cursor.fetchall()
     finally:
         cursor.close()
         conn.close()
+    # print rows
     delete_old_file(raws)
     update(raws)
     return
