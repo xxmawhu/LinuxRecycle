@@ -72,6 +72,12 @@ def main():
     # print rows
     delete_old_file(raws)
     update(raws)
+    # write log
+    log_file = os.path.expanduser('~/.mtdb/log')
+    f = open(log_file, 'a')
+    date = time.strftime("%Y-%m-%d:%H:%M:%S", time.localtime())
+    f.write('auto clear trash @ {}'.format(date))
+    f.close()
     return
 if __name__ == "__main__":
     main()

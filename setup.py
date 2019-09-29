@@ -15,8 +15,14 @@ from setuptools import setup
 from setuptools import find_packages
 import core
 import subprocess
-pr = subprocess.Popen(['sh', 'setup.sh'])
-out , err = pr.communicate()
+import sys
+def set_crontab():
+    path = sys.path[0]
+    f = open('tmp.txt', 'w')
+    f.write('0 0 * * * .{}/core/auto_clear.py\n'.format(path))
+    f.close() 
+    subprocess.Popen(['crontab', 'tmp.txt'])
+set_crontab()
 setup(
     name='LinuxRecycle',
     version='1.0',
