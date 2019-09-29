@@ -20,8 +20,8 @@ some functions to operate the data base
 import sqlite3
 from sqlite3 import OperationalError
 # import os
-import time
-from config import local_config
+# import time
+from core.config import local_config
 query = """
 CREATE TABLE IF NOT EXISTS fileInfo
 (id int, 
@@ -33,7 +33,7 @@ time real, date text, exits text)
 
 def initDB():
     conn = sqlite3.connect(local_config.get('core', 'data_base_file'),
-            timeout=30.0)
+                           timeout=30.0)
     try:
         cursor = conn.cursor()
         cursor.execute(query)
@@ -47,7 +47,7 @@ def initDB():
 
 def lastID():
     conn = sqlite3.connect(local_config.get('core', 'data_base_file'),
-            timeout=30.0)
+                           timeout=30.0)
     ID = 0
     try:
         cursor = conn.cursor()
@@ -69,7 +69,7 @@ def insertDB(information):
         # print "id:", indx, "item",  item
         IDinfo.append((ID + indx, ) + item)
     conn = sqlite3.connect(local_config.get('core', 'data_base_file'),
-            timeout=30.0)
+                           timeout=30.0)
     insertmt = 'INSERT INTO fileInfo VALUES(?, ?, ?, ?, ?, ?, ?)'
     # print IDinfo
     cursor = conn.cursor()
@@ -97,24 +97,28 @@ def getAllInf():
     get all information from the data base
     """
     con = sqlite3.connect(local_config.get('core', 'data_base_file'),
-            timeout=30.0)
+                          timeout=30.0)
     cursor = con.cursor()
     cursor = con.execute("SELECT * FROM fileInfo")
     rows = cursor.fetchall()
     return rows
+
 
 def getLastRecord(n):
     """
     get the record of last #n
     """
     con = sqlite3.connect(local_config.get('core', 'data_base_file'),
-            timeout=30.0)
+                          timeout=30.0)
     cursor = con.cursor()
-    cursor.execute("SELECT * FROM fileInfo ORDER BY id DESC limit {}".format(n))
+    cursor.execute(
+        "SELECT * FROM fileInfo ORDER BY id DESC limit {}".format(n))
     rows = cursor.fetchall()
     cursor.close()
     con.close()
     return rows
+
+
 def get_record_by_id(ID):
     """
     get the record with certain ID 
@@ -128,9 +132,11 @@ def get_record_by_id(ID):
         cursor.close()
     con.close()
     return rows
+
+
 def clearDB():
     con = sqlite3.connect(local_config.get('core', 'data_base_file'),
-            timeout=30.0)
+                          timeout=30.0)
     delQuery = "DELETE from fileInfo"
     try:
         cursor = con.cursor()
@@ -150,7 +156,7 @@ def delByID(Id):
         void
     """
     con = sqlite3.connect(local_config.get('core', 'data_base_file'),
-            timeout=30.0)
+                          timeout=30.0)
     try:
         cursor = con.cursor()
         delQuery = "DELETE from fileInfo WHERE id=?"
@@ -171,4 +177,3 @@ if __name__ == "__main__":
         print inf
     print lastID()
     print get_record_by_id(1)
-
