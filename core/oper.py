@@ -34,7 +34,7 @@ def RmForce(fileName):
         # [Error 21] Is directory: ...
         if e.args[0] == 21:
             Type = 'd'
-            shutil.rmtree(address)
+            os.rmdir(address)
         else:
             print "RmForce"
             raise e

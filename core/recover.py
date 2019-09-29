@@ -28,7 +28,7 @@ def recover(ID):
     record_inf = inf[0]
     # print record_inf
     try:
-        shutil.copy(record_inf[2], record_inf[1])
+        shutil.copyfile(record_inf[2], record_inf[1])
     finally:
         pass
 

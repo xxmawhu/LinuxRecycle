@@ -14,6 +14,7 @@
 import time
 import sqlite3
 import shutil
+import os
 from config import local_config
 def delete_old_file(raws):
     """
@@ -23,9 +24,9 @@ def delete_old_file(raws):
     for info in raws:
         file_name = info[2]
         if info[3] != 'd':
-            shutil.remove(file_name)
+            os.remove(file_name)
         else:
-            shutil.rmtree(file_name)
+            os.rmdir(file_name)
     return
 
 def update(raws):
