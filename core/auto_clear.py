@@ -13,9 +13,11 @@
 # ====================================================
 import time
 import sqlite3
-import shutil
+# import shutil
 import os
-from config import local_config
+from core.config import local_config
+
+
 def delete_old_file(raws):
     """
     delete the file in the .trash
@@ -27,20 +29,21 @@ def delete_old_file(raws):
         if info[3] != 'd':
             try:
                 os.remove(file_name)
-            except OSError as e:
+            except OSError:
                 pass
         else:
             try:
                 os.rmdir(file_name)
-            except OSError as e:
+            except OSError:
                 pass
     return
+
 
 def update(rows):
     """
     func: update the record information to 'removed'
     """
-    update_state = 'UPDATE fileInfo SET exits="removed" WHERE id==?;' 
+    update_state = 'UPDATE fileInfo SET exits="removed" WHERE id==?;'
     conn = sqlite3.connect(local_config.get('core', 'data_base_file'))
     try:
         cursor = conn.cursor()
@@ -52,16 +55,20 @@ def update(rows):
         cursor.close()
         conn.close()
     return
+
+
 def main():
     """
     1. select the record with time less than t_0 and exits = ""exits
     2. delete them and update the data base
     """
     conn = sqlite3.connect(local_config.get('core', 'data_base_file'))
-    t0 = time.time() - 3600.0 * 24.0 *  local_config.getint('core', 'keep_days')
-    t0 = time.time() - 3600.0 * 24.0 *  1.0 #local_config.getint('core', 'keep_days')
-    query = 'SELECT * FROM fileInfo WHERE  time < {} AND exits!="removed"'.format(t0)
-    raws=[]
+    t0 = time.time() - 3600.0 * 24.0 * local_config.getint('core', 'keep_days')
+    t0 = time.time(
+    ) - 3600.0 * 24.0 * 1.0  #local_config.getint('core', 'keep_days')
+    query = 'SELECT * FROM fileInfo WHERE  time < {} AND exits!="removed"'.format(
+        t0)
+    raws = []
     try:
         cursor = conn.cursor()
         cursor.execute(query)
@@ -79,6 +86,7 @@ def main():
     f.write('auto clear trash @ {}'.format(date))
     f.close()
     return
+
+
 if __name__ == "__main__":
     main()
-
