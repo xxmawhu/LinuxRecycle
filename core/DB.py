@@ -19,7 +19,7 @@ some functions to operate the data base
 
 import sqlite3
 from sqlite3 import OperationalError
-# import os
+import os
 # import time
 from core.config import local_config
 query = """
@@ -169,7 +169,8 @@ def delByID(Id):
 
 
 # initi the fileInfo.config.db
-initDB()
+if not os.path.isfile(local_config.get('core', 'data_base_file')):
+    initDB()
 if __name__ == "__main__":
     print lastID()
 
