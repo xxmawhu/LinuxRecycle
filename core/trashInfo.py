@@ -39,7 +39,7 @@ def inTrash(afileName):
     Once found ${USER}/.trash in the path, then the path is determined within
     a trash
     """
-    tak = '{}/.trash'.format(os.environ["USER"])
+    tak = '/.trash/'
     if tak in afileName:
         return True
     return False
