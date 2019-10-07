@@ -24,7 +24,7 @@ def RmForce(fileName):
     if -f in opt, rm the file directly
     """
     address = os.path.abspath(fileName)
-    # print("address :", address)
+    print("address :", address)
     exits = "removed"
     Type = 'f'
     date = time.strftime("%Y-%m-%d:%H:%M:%S", time.localtime())
@@ -34,9 +34,8 @@ def RmForce(fileName):
         # [Error 21] Is directory: ...
         if e.args[0] == 21:
             Type = 'd'
-            os.rmdir(address)
+            shutil.rmtree(address)
         else:
-            print "RmForce"
             raise e
         pass
     finally:
