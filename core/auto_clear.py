@@ -83,7 +83,7 @@ def main():
     log_file = os.path.expanduser('~/.mtdb/log')
     f = open(log_file, 'a')
     date = time.strftime("%Y-%m-%d:%H:%M:%S", time.localtime())
-    f.write('auto clear trash @ {}'.format(date))
+    f.write('auto clear trash @ {}\n'.format(date))
     f.close()
     return
 

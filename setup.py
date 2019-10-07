@@ -20,7 +20,7 @@ import os
 def set_crontab():
     path = sys.path[0]
     f = open('tmp.txt', 'w')
-    f.write('0 0 * * * .{}/core/auto_clear.py\n'.format(path))
+    f.write('0 0 * * * cd {}/core; ./auto_clear.py\n'.format(path))
     f.close() 
     subprocess.Popen(['crontab', 'tmp.txt'])
     try:
