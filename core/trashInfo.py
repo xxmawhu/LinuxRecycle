@@ -16,7 +16,6 @@ import os
 import argv
 from config import local_config
 
-
 def getTrashAddress(afileName):
     """
     Warning: the file name can't contain ~, or $USER,
@@ -25,8 +24,16 @@ def getTrashAddress(afileName):
     2. [0]/$USER/.trash
     """
     user = os.environ["USER"]
-    pp = afileName.split(user)
-    return os.path.join(pp[0], user, '.trash')
+    if user in afileName:
+        pp = afileName.split(user)
+        print('pp=', pp)
+        print("getTrashAddress: the trash address",
+                os.path.join(pp[0], user, '.trash'))
+        return os.path.join(pp[0], user, '.trash')
+    else:
+        trs="/"+afileName.split("/")[1]+ '/.trash'
+        print("getTrashAddress: the trash address",trs)
+        return trs
 
 
 def inTrash(afileName):
