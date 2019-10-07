@@ -13,7 +13,7 @@
 # ====================================================
 import time
 import sqlite3
-# import shutil
+import shutil
 import os
 from core.config import local_config
 
@@ -33,7 +33,7 @@ def delete_old_file(raws):
                 pass
         else:
             try:
-                os.rmdir(file_name)
+                shutil.rmtree(file_name)
             except OSError:
                 pass
     return
