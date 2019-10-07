@@ -34,7 +34,7 @@ def Rm(afile):
 
 def obtainAllFile():
     files = []
-    for i in sys.argv:
+    for i in sys.argv[1:]:
         files += glob.glob(i)
     return files
 
