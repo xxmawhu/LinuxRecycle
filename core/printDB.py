@@ -12,7 +12,7 @@
 #
 # ====================================================
 
-import DB
+from . import DB
 import time
 import sys
 from termcolor import colored
@@ -21,8 +21,8 @@ def init():
     show help 
     """
     if '-h' in sys.argv[1:]:
-        print "usage : show the last #n records" 
-        print "    rm.printDB n" 
+        print("usage : show the last #n records") 
+        print("    rm.printDB n") 
         exit(0)
     return
 def main():
@@ -37,11 +37,11 @@ def main():
     except IndexError as e:
         pass
     except ValueError as e:
-        print "Error:: Please input a integer!!! .> -> {}".format(sys.argv[1])
+        print("Error:: Please input a integer!!! .> -> {}".format(sys.argv[1]))
         raise e
     for inf in sorted( DB.getLastRecord(n), key=lambda x:x[0]):
         date = time.asctime(time.localtime(inf[4])).replace("Sat", "@")
-        print colored(inf[0], 'blue','on_grey', attrs=['bold']), colored(date,'green'
-                ), inf[1]
+        print(colored(inf[0], 'blue','on_grey', attrs=['bold']), colored(date,'green'
+                ), inf[1])
 if __name__ == "__main__":
     main()

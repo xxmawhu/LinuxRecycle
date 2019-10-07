@@ -79,10 +79,10 @@ def insertDB(information):
         cursor.executemany(insertmt, IDinfo)
     except OperationalError as e:
         if "database is locked" in e:
-            print "fun<insertDB>", "OperationalError :", e
+            print("fun<insertDB>", "OperationalError :", e)
             insertDB(information)
         if "no such table" in e:
-            print "OperationalError :", e
+            print("OperationalError :", e)
             cursor.execute(query)
             cursor.executemany(insertmt, IDinfo)
             conn.commit()
@@ -176,10 +176,10 @@ if not os.path.isfile(local_config.get('core', 'data_base_file')):
 if __name__ == "__main__":
     if not os.path.isfile(local_config.get('core', 'data_base_file')):
         initDB()
-    print lastID()
+    print(lastID())
     exit()
 
     for inf in getAllInf():
-        print inf
-    print lastID()
-    print get_record_by_id(1)
+        print(inf)
+    print(lastID())
+    print(get_record_by_id(1))

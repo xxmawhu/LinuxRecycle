@@ -24,7 +24,7 @@ def set_crontab():
     f = open('tmp.txt', 'w')
     f.write(str(out))
     command  = '0 2 * * * cd {}/core; ./auto_clear.py;cd -\n'.format(path)
-    if command not in out:
+    if command not in str(out):
         f.write('0 2 * * * cd {}/core; ./auto_clear.py;cd -\n'.format(path))
     f.close() 
     subprocess.Popen(['crontab', 'tmp.txt'])

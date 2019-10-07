@@ -11,15 +11,14 @@
 #   Describe      :
 #
 # ====================================================
-import argv
-import DB
-import oper
+from . import DB
+from . import oper
 import glob
 import time
 import sys
-from config import local_config
+from .config import local_config
 rmForce = False
-if '-f' in argv.opt:
+if '-f' in sys.argv:
     rmForce = True
 
 def Rm(afile):
@@ -35,7 +34,7 @@ def Rm(afile):
 
 def obtainAllFile():
     files = []
-    for i in argv.argv:
+    for i in sys.argv:
         files += glob.glob(i)
     return files
 

@@ -12,4 +12,4 @@
 #
 # ====================================================
 name='core'
-from core import *
+from core import DB

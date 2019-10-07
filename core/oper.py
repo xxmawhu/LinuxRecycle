@@ -13,7 +13,7 @@
 # ====================================================
 import os
 import time
-import trashInfo
+from . import trashInfo
 import subprocess as sp
 import shutil
 import glob
@@ -73,7 +73,7 @@ def MoveToTrash(address):
         try:
             shutil.move(address, trashAddress)
             return (address, trashAddress, Type, time.time(), date, exits)
-        except IOError, e:
+        except IOError as e:
             os.mkdir(trashName)
             shutil.move(address, trashAddress)
             return (address, trashAddress, Type, time.time(), date, exits)
@@ -86,7 +86,7 @@ if __name__ == "__main__":
     RmForce(testf)
     exit()
     os.system("touch {}".format(testf))
-    print(MoveToTrash(testf))
+    print((MoveToTrash(testf)))
     for ff in glob.glob("dada*"):
         # print ff
         MoveToTrash(ff)

@@ -12,7 +12,7 @@
 #
 # ====================================================
 
-import DB
+from . import DB
 import time
 import sys
 from termcolor import colored
@@ -23,7 +23,7 @@ def recover(ID):
     """
     inf = DB.get_record_by_id(ID)
     if not inf:
-        print "Error: voild ID {}".format(ID)
+        print("Error: voild ID {}".format(ID))
         return
     record_inf = inf[0]
     # print record_inf
@@ -37,7 +37,7 @@ def init():
     show the help
     """
     if '-h'  in sys.argv[1:]:
-        print "usage: recover id1 [id2 id3]"
+        print("usage: recover id1 [id2 id3]")
         exit(0)
     return
 

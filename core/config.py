@@ -30,7 +30,7 @@ else:
 
 user = os.environ["USER"]
 if __name__ == "__main__":
-    print local_config['core']['Num_Processor']
-    print local_config['core']['keep_days']
-    print local_config['core']['data_base_file']
+    print(local_config['core']['Num_Processor'])
+    print(local_config['core']['keep_days'])
+    print(local_config['core']['data_base_file'])
 # print local_config.get('core', 'white_file')

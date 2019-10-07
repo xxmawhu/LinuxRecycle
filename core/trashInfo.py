@@ -13,8 +13,8 @@
 # ====================================================
 import sys
 import os
-import argv
-from config import local_config
+from . import argv
+from .config import local_config
 
 def getTrashAddress(afileName):
     """
@@ -26,13 +26,13 @@ def getTrashAddress(afileName):
     user = os.environ["USER"]
     if user in afileName:
         pp = afileName.split(user)
-        print('pp=', pp)
-        print("getTrashAddress: the trash address",
-                os.path.join(pp[0], user, '.trash'))
+        print(('pp=', pp))
+        print(("getTrashAddress: the trash address",
+                os.path.join(pp[0], user, '.trash')))
         return os.path.join(pp[0], user, '.trash')
     else:
         trs="/"+afileName.split("/")[1]+ '/.trash'
-        print("getTrashAddress: the trash address",trs)
+        print(("getTrashAddress: the trash address",trs))
         return trs
 
 
@@ -71,7 +71,7 @@ def whiteFile(afileName):
 
 if __name__ == "__main__":
     testf = os.environ["PWD"]
-    print(getTrashAddress(testf))
+    print((getTrashAddress(testf)))
     ff = getTrashAddress(testf) + "/dada/dada"
     if inTrash(ff):
         print(ff)
