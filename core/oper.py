@@ -7,7 +7,7 @@
 #   Email         : xxmawhu@163.com
 #   File Name     : oper.py
 #   Created Time  : 2019-09-19 15:05
-#   Last Modified : 2019-09-19 19:46
+#   Last Modified : 2019-10-07 11:10
 #   Describe      :
 #
 # ====================================================
@@ -43,6 +43,7 @@ def RmForce(fileName):
         return (address, "", Type, time.time(), date, exits)
 
 
+#@profile
 def MoveToTrash(address):
     """
     Warning: the file must be an exact file or directory. The following cases
