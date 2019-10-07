@@ -24,6 +24,7 @@ def set_crontab():
     f = open('tmp.txt', 'w')
     try:
         out = str(out).decode()
+        print(out)
     except Exception:
         pass
     f.write(str(out))
