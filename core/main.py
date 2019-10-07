@@ -7,11 +7,10 @@
 #   Email         : xxmawhu@163.com
 #   File Name     : main.py
 #   Created Time  : 2019-09-19 19:46
-#   Last Modified : 2019-09-26 15:38
+#   Last Modified : 2019-10-07 11:08
 #   Describe      :
 #
 # ====================================================
-from multiprocessing import Pool
 import argv
 import DB
 import oper
@@ -22,7 +21,6 @@ from config import local_config
 rmForce = False
 if '-f' in argv.opt:
     rmForce = True
-
 
 def Rm(afile):
     # rm one file for use of pool.map
@@ -41,10 +39,6 @@ def obtainAllFile():
         files += glob.glob(i)
     return files
 
-
-# print obtainAllFile()
-
-
 def test():
     executor = Pool(local_config.getint('core', 'Num_Processor'))
     logs  =  executor.map(Rm, ['LinuxRecycle.egg-info', 'build'])
@@ -53,10 +47,10 @@ def test():
     DB.insertDB(logs)
 
 def main():
-    executor = Pool(local_config.getint('core', 'Num_Processor'))
-    logs  =  executor.map(Rm, obtainAllFile())
-    executor.close()
-    executor.join() 
+    if rmForce:
+        logs = list(map(oper.RmForce, obtainAllFile()))
+    else:
+        logs = list(map(oper.MoveToTrash, obtainAllFile()))
     DB.insertDB(logs)
 if __name__ == "__main__":
     main()
