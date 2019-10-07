@@ -22,6 +22,10 @@ def set_crontab():
     pr = subprocess.Popen(['crontab', '-l'], stdout=subprocess.PIPE)
     out, err = pr.communicate()
     f = open('tmp.txt', 'w')
+    try:
+        out = str(out).decode()
+    except Exception:
+        pass
     f.write(str(out))
     command  = '0 2 * * * cd {}/core; ./auto_clear.py;cd -\n'.format(path)
     if command not in str(out):
@@ -43,5 +47,8 @@ setup(
         'console_scripts':['rm=core.main:main', 
             'rm.printDB=core.printDB:main',
             'rm.recover=core.recover:main']
-        }
+        },
+    install_requires=[
+        'termcolor',
+        ]
 )
