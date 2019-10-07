@@ -24,19 +24,20 @@ import os
 from core.config import local_config
 query = """
 CREATE TABLE IF NOT EXISTS fileInfo
-(id int, 
+(id INTEGER PRIMARY KEY, 
  address text, 
  trashAddress text, type text,
 time real, date text, exits text)
 """
 
 
+# @profile
 def initDB():
-    conn = sqlite3.connect(local_config.get('core', 'data_base_file'),
-                           timeout=30.0)
+    conn = sqlite3.connect(local_config.get('core', 'data_base_file'))
     try:
         cursor = conn.cursor()
         cursor.execute(query)
+        cursor.execute("CREATE index  fileInfoIndex on fileInfo(id) ")
         conn.commit()
     # except Exception:
     #    pass
@@ -45,9 +46,9 @@ def initDB():
     return
 
 
+# @profile
 def lastID():
-    conn = sqlite3.connect(local_config.get('core', 'data_base_file'),
-                           timeout=30.0)
+    conn = sqlite3.connect(local_config.get('core', 'data_base_file'), timeout=30.0)
     ID = 0
     try:
         cursor = conn.cursor()
@@ -56,10 +57,11 @@ def lastID():
         if rows:
             ID = rows[0][0]
     finally:
+        cursor.close()
         conn.close()
     return ID
 
-
+#@profile
 def insertDB(information):
     # add ID
     ID = lastID() + 1
@@ -68,11 +70,11 @@ def insertDB(information):
     for indx, item in enumerate(information):
         # print "id:", indx, "item",  item
         IDinfo.append((ID + indx, ) + item)
-    conn = sqlite3.connect(local_config.get('core', 'data_base_file'),
-                           timeout=30.0)
+    conn = sqlite3.connect(local_config.get('core', 'data_base_file') )
     insertmt = 'INSERT INTO fileInfo VALUES(?, ?, ?, ?, ?, ?, ?)'
     # print IDinfo
     cursor = conn.cursor()
+    cursor.execute("begin transaction")
     try:
         cursor.executemany(insertmt, IDinfo)
     except OperationalError as e:
@@ -172,7 +174,10 @@ def delByID(Id):
 if not os.path.isfile(local_config.get('core', 'data_base_file')):
     initDB()
 if __name__ == "__main__":
+    if not os.path.isfile(local_config.get('core', 'data_base_file')):
+        initDB()
     print lastID()
+    exit()
 
     for inf in getAllInf():
         print inf
