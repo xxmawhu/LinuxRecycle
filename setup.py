@@ -19,12 +19,18 @@ import sys
 import os
 def set_crontab():
     path = sys.path[0]
+    pr = subprocess.Popen(['crontab', '-l'], stdout=subprocess.PIPE)
+    out, err = pr.communicate()
     f = open('tmp.txt', 'w')
-    f.write('0 0 * * * cd {}/core; ./auto_clear.py\n'.format(path))
+    f.write(str(out))
+    command  = '0 2 * * * cd {}/core; ./auto_clear.py;cd -\n'.format(path)
+    if command not in out:
+        f.write('0 2 * * * cd {}/core; ./auto_clear.py;cd -\n'.format(path))
     f.close() 
     subprocess.Popen(['crontab', 'tmp.txt'])
     try:
-        os.remove('tmp.txt')
+        pass
+        #os.remove('tmp.txt')
     except OSError:
         pass
 set_crontab()
