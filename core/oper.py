@@ -24,7 +24,6 @@ def RmForce(fileName):
     if -f in opt, rm the file directly
     """
     address = os.path.abspath(fileName)
-    print("address :", address)
     exits = "removed"
     Type = 'f'
     date = time.strftime("%Y-%m-%d:%H:%M:%S", time.localtime())
