@@ -15,7 +15,7 @@ import time
 import sqlite3
 import shutil
 import os
-from core.config import local_config
+from config import local_config
 
 
 def delete_old_file(raws):
