@@ -10,6 +10,7 @@
 #   Describe      :
 #
 # ====================================================
+export HOME="/besfs/users/maxx/home"
 source /workfs/bes/maxx/local/python-2.7.14/setup.sh
 cd /besfs/users/maxx/Tool/github/LinuxRecycle/core
 python auto_clear.py
