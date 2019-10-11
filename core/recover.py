@@ -29,6 +29,8 @@ def recover(ID):
     # print record_inf
     try:
         shutil.copy2(record_inf[2], record_inf[1])
+    except IsADirectoryError:
+        shutil.copytree(record_inf[2], record_inf[1])
     finally:
         pass
 
