@@ -41,7 +41,7 @@ def set_crontab():
 set_crontab()
 setup(
     name='LinuxRecycle',
-    version='1.0',
+    version='1.1',
     author='Xin-Xin Ma',
     packages=find_packages(),
     project_urls={
