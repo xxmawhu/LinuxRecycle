@@ -17,8 +17,9 @@ local_config = ConfigParser()
 if os.path.exists(os.path.expanduser('~/.mtdb/mtrc')):
     local_config.read(os.path.expanduser('~/.mtdb/mtrc'))
 else:
-    if not os.path.exists("~/.mtdb"):
-        os.mkdir("~/.mtdb")
+    mtdbDir = os.path.expanduser('~/.mtdb')
+    if not os.path.exists(mtdbDir):
+        os.mkdir(mtdbDir)
     local_config.add_section('core')
     local_config.set('core', 'Num_Processor', "100")
     local_config.set('core', 'Keep_data_base', "1")

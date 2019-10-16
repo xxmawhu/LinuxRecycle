@@ -2,7 +2,11 @@
 A recycle system for linux
 ## How to install?
 ```bash
-python setup.py install
+python setup.py install [--user]
+```
+or
+```bash
+pip install LinuxRecycle [--user]
 ```
 
 ## options
