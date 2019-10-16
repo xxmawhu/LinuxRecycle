@@ -44,6 +44,9 @@ setup(
     version='1.0',
     author='Xin-Xin Ma',
     packages=find_packages(),
+    project_urls={
+    'Source': 'https://github.com/xxmawhu/LinuxRecycle',
+	},  
     entry_points={
         'console_scripts':['rm=core.main:main', 
             'rm.printDB=core.printDB:main',
