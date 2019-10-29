@@ -50,7 +50,11 @@ def main():
         logs = list(map(oper.RmForce, obtainAllFile()))
     else:
         logs = list(map(oper.MoveToTrash, obtainAllFile()))
-    DB.insertDB(logs)
+    logCol = [ ]
+    for log in logs:
+        if log[-1] == "exits":
+            logCol.append(log)
+    DB.insertDB(logCol)
 if __name__ == "__main__":
     main()
     exit(0)
