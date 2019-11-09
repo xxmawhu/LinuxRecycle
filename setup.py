@@ -19,17 +19,17 @@ import sys
 import os
 setup(
     name='LinuxRecycle',
-    version='1.5',
+    version='1.6',
     author='Xin-Xin Ma',
     packages=find_packages(),
     project_urls={
     'Source': 'https://github.com/xxmawhu/LinuxRecycle',
 	},  
     entry_points={
-        'console_scripts':['rm=core.main:main', 
-            'rm.printDB=core.printDB:main',
-            'rm.clean=core.auto_clear:main',
-            'rm.recover=core.recover:main']
+        'console_scripts':['rm=linuxrecycle.main:main', 
+            'rm.printDB=linuxrecycle.printDB:main',
+            'rm.clean=linuxrecycle.auto_clear:main',
+            'rm.recover=linuxrecycle.recover:main']
         },
     install_requires=[
         'termcolor',
