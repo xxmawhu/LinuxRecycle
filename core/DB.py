@@ -30,7 +30,6 @@ CREATE TABLE IF NOT EXISTS fileInfo
 time real, date text, exits text)
 """
 
-
 # @profile
 def initDB():
     conn = sqlite3.connect(local_config.get('core', 'data_base_file'))
@@ -61,7 +60,7 @@ def lastID():
         conn.close()
     return ID
 
-#@profile
+
 def insertDB(information):
     # add ID
     ID = lastID() + 1
@@ -106,15 +105,20 @@ def getAllInf():
     return rows
 
 
-def getLastRecord(n):
+def getLastRecord(n, condition=''):
     """
     get the record of last #n
     """
     con = sqlite3.connect(local_config.get('core', 'data_base_file'),
                           timeout=30.0)
     cursor = con.cursor()
-    cursor.execute(
-        "SELECT * FROM fileInfo ORDER BY id DESC limit {}".format(n))
+    sel_commond = "SELECT * FROM fileInfo"
+    if condition:
+        sel_commond += " WHERE {} ".format(condition)
+    sel_commond += "ORDER BY id DESC limit {}".format(n)
+    # print("condition {}".format(condition))
+    # print("execute {}".format(sel_commond))
+    cursor.execute(sel_commond)
     rows = cursor.fetchall()
     cursor.close()
     con.close()

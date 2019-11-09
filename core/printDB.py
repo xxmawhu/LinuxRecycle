@@ -12,10 +12,12 @@
 #
 # ====================================================
 
-from . import DB
+import DB
 import time
 import sys
 from termcolor import colored
+
+
 def init():
     """
     show help 
@@ -25,6 +27,7 @@ def init():
         print("    rm.printDB n") 
         exit(0)
     return
+
 def main():
     '''
     function:
@@ -39,7 +42,8 @@ def main():
     except ValueError as e:
         print("Error:: Please input a integer!!! .> -> {}".format(sys.argv[1]))
         raise e
-    for inf in sorted(DB.getLastRecord(n), key=lambda x:x[0]):
+    for inf in sorted(DB.getLastRecord(n, "exits='exits'"), key=lambda x:x[0]):
+        # print(inf)
         date = time.asctime(time.localtime(inf[4])).replace("Sat", "@")
         print (" ".join([colored(inf[0], 'blue','on_grey', attrs=['bold']), colored(date,'green'
                 ), inf[1]]))

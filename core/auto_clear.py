@@ -47,7 +47,7 @@ def update(rows):
     conn = sqlite3.connect(local_config.get('core', 'data_base_file'))
     try:
         cursor = conn.cursor()
-        print([int(i[0]) for i in rows])
+        # print([int(i[0]) for i in rows])
         cursor.executemany(update_state, [(str(i[0]),) for i in rows])
         # rows = cursor.fetchall()
         conn.commit()
@@ -64,10 +64,10 @@ def main():
     """
     conn = sqlite3.connect(local_config.get('core', 'data_base_file'))
     t0 = time.time() - 3600.0 * 24.0 * local_config.getint('core', 'keep_days')
-    t0 = time.time(
-    ) - 3600.0 * 24.0 * 1.0  #local_config.getint('core', 'keep_days')
-    query = 'SELECT * FROM fileInfo WHERE  time < {} AND exits!="removed"'.format(
-        t0)
+    t0 = time.time() - 3600.0 * 24.0 * 1.0  
+    # local_config.getint('core', 'keep_days')
+    query = "SELECT * FROM fileInfo "
+    query += ' WHERE  time < {} AND exits!="removed"'.format(t0)
     raws = []
     try:
         cursor = conn.cursor()

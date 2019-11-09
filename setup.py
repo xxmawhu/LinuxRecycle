@@ -19,7 +19,7 @@ import sys
 import os
 setup(
     name='LinuxRecycle',
-    version='1.4',
+    version='1.5',
     author='Xin-Xin Ma',
     packages=find_packages(),
     project_urls={
@@ -28,6 +28,7 @@ setup(
     entry_points={
         'console_scripts':['rm=core.main:main', 
             'rm.printDB=core.printDB:main',
+            'rm.clean=core.auto_clear:main',
             'rm.recover=core.recover:main']
         },
     install_requires=[
