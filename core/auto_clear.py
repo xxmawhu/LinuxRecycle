@@ -43,16 +43,16 @@ def update(rows):
     """
     func: update the record information to 'removed'
     """
-    update_state = 'UPDATE fileInfo SET exits="removed" WHERE id==?;'
+    update_state = 'UPDATE fileInfo SET exits="removed" WHERE id==?'
     conn = sqlite3.connect(local_config.get('core', 'data_base_file'))
     try:
         cursor = conn.cursor()
-        # print [int(i[0]) for i in rows]
-        cursor.executemany(update_state, [(str(i[0])) for i in rows])
+        print([int(i[0]) for i in rows])
+        cursor.executemany(update_state, [(str(i[0]),) for i in rows])
         # rows = cursor.fetchall()
         conn.commit()
-    finally:
         cursor.close()
+    finally:
         conn.close()
     return
 
