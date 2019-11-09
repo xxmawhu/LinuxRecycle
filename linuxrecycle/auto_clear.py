@@ -15,7 +15,7 @@ import time
 import sqlite3
 import shutil
 import os
-from config import local_config
+from . import config
 
 
 def delete_old_file(raws):
@@ -44,7 +44,7 @@ def update(rows):
     func: update the record information to 'removed'
     """
     update_state = 'UPDATE fileInfo SET exits="removed" WHERE id==?'
-    conn = sqlite3.connect(local_config.get('core', 'data_base_file'))
+    conn = sqlite3.connect(config.local_config.get('core', 'data_base_file'))
     try:
         cursor = conn.cursor()
         # print([int(i[0]) for i in rows])
@@ -62,10 +62,10 @@ def main():
     1. select the record with time less than t_0 and exits = ""exits
     2. delete them and update the data base
     """
-    conn = sqlite3.connect(local_config.get('core', 'data_base_file'))
-    t0 = time.time() - 3600.0 * 24.0 * local_config.getint('core', 'keep_days')
+    conn = sqlite3.connect(config.local_config.get('core', 'data_base_file'))
+    t0 = time.time() - 3600.0 * 24.0 * config.local_config.getint('core', 'keep_days')
     t0 = time.time() - 3600.0 * 24.0 * 1.0  
-    # local_config.getint('core', 'keep_days')
+    # config.local_config.getint('core', 'keep_days')
     query = "SELECT * FROM fileInfo "
     query += ' WHERE  time < {} AND exits!="removed"'.format(t0)
     raws = []
