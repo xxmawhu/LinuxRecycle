@@ -11,11 +11,8 @@
 #   Describe      :
 #
 # ====================================================
-import DB
-import config
-import oper
-import auto_clear
-import main
-import printDB
-import recover
-import trashInfo
+__all__ = [
+    'DB', 'config', 'oper', 'auto_clear', 'main', 'printDB', 'recover',
+    'trashInfo'
+]
+from linuxrecycle import *

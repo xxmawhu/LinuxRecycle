@@ -11,12 +11,12 @@
 #   Describe      :
 #
 # ====================================================
-import DB
-import oper
 import glob
 import time
 import sys
-from config import local_config
+from linuxrecycle.config import local_config
+from linuxrecycle import DB
+from linuxrecycle import oper
 rmForce = False
 if '-f' in sys.argv:
     rmForce = True

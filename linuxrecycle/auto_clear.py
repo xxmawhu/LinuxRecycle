@@ -15,7 +15,7 @@ import time
 import sqlite3
 import shutil
 import os
-import config
+from linuxrecycle import config
 
 
 def delete_old_file(raws):

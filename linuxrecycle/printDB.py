@@ -11,11 +11,10 @@
 #   Describe      :
 #
 # ====================================================
-
-import DB
 import time
 import sys
 from termcolor import colored
+from linuxrecycle import DB
 
 
 def init():

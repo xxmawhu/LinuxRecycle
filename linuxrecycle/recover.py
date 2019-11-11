@@ -12,7 +12,7 @@
 #
 # ====================================================
 
-import DB
+from linuxrecycle import DB
 import time
 import sys
 from termcolor import colored
