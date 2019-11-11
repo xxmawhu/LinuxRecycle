@@ -32,6 +32,20 @@ else:
         local_config.write(configFile)
 
 user = os.environ["USER"]
+
+
+def makeAutoClear():
+    mtdbDir = os.path.expanduser('~/.mtdb')
+    f = open(mtdbDir + "/clear.py", 'w')
+    f.write("#!/usr/bin/env python\n")
+    f.write("import linuxrecycle.auto_clear as cl\n")
+    f.write("cl.main()\n")
+    f.close()
+
+autoClear = os.path.expanduser('~/.mtdb/clear.py')
+if not os.path.exists(autoClear):
+    makeAutoClear()
+
 if __name__ == "__main__":
     print(local_config['core']['Num_Processor'])
     print(local_config['core']['keep_days'])

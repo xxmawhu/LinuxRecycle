@@ -13,8 +13,8 @@
 # ====================================================
 import sys
 import os
-import argv
-from config import local_config
+from linuxrecycle import argv
+from linuxrecycle.config import local_config
 
 def getTrashAddress(afileName):
     """

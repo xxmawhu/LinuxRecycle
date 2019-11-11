@@ -46,14 +46,6 @@ def test():
     DB.insertDB(logs)
 
 
-def makeAutoClear():
-    mtdbDir = os.path.expanduser('~/.mtdb')
-    f = open(mtdbDir + "/clear.py", 'w')
-    f.write("#!/usr/bin/env python\n")
-    f.write("import linuxrecycle.auto_clear as cl\n")
-    f.write("cl.main()\n")
-    f.close()
-
 def main():
     if rmForce:
         logs = list(map(oper.RmForce, obtainAllFile()))
@@ -64,6 +56,7 @@ def main():
         if log[-1] == "exits":
             logCol.append(log)
     DB.insertDB(logCol)
+
 if __name__ == "__main__":
     main()
     exit(0)

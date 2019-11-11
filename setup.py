@@ -19,7 +19,7 @@ import sys
 import os
 setup(
     name='LinuxRecycle',
-    version='1.7.0',
+    version='1.8.0',
     author='Xin-Xin Ma',
     packages=find_packages(),
     project_urls={
