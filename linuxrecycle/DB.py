@@ -21,7 +21,7 @@ import sqlite3
 from sqlite3 import OperationalError
 import os
 # import time
-from core.config import local_config
+from linuxrecycle.config import local_config
 query = """
 CREATE TABLE IF NOT EXISTS fileInfo
 (id INTEGER PRIMARY KEY, 

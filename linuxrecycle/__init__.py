@@ -11,5 +11,11 @@
 #   Describe      :
 #
 # ====================================================
-name='core'
-from core import DB
+import DB
+import config
+import oper
+import auto_clear
+import main
+import printDB
+import recover
+import trashInfo

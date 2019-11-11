@@ -12,7 +12,7 @@
 #
 # ====================================================
 
-from . import DB
+import DB
 import time
 import sys
 from termcolor import colored

@@ -13,7 +13,7 @@
 # ====================================================
 import os
 import time
-from . import trashInfo
+import trashInfo
 import subprocess as sp
 import shutil
 import glob

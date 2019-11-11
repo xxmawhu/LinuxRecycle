@@ -13,8 +13,8 @@
 # ====================================================
 import sys
 import os
-from . import argv
-from .config import local_config
+import argv
+from config import local_config
 
 def getTrashAddress(afileName):
     """

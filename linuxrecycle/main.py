@@ -11,12 +11,12 @@
 #   Describe      :
 #
 # ====================================================
-from . import DB
-from . import oper
+import DB
+import oper
 import glob
 import time
 import sys
-from .config import local_config
+from config import local_config
 rmForce = False
 if '-f' in sys.argv:
     rmForce = True
@@ -44,6 +44,15 @@ def test():
     executor.close()
     executor.join() 
     DB.insertDB(logs)
+
+
+def makeAutoClear():
+    mtdbDir = os.path.expanduser('~/.mtdb')
+    f = open(mtdbDir + "/clear.py", 'w')
+    f.write("#!/usr/bin/env python\n")
+    f.write("import linuxrecycle.auto_clear as cl\n")
+    f.write("cl.main()\n")
+    f.close()
 
 def main():
     if rmForce:
