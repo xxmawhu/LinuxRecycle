@@ -13,12 +13,10 @@
 
 from setuptools import setup
 from setuptools import find_packages
-import core
-import subprocess
 import sys
 import os
 
-m_version = '1.8.0'
+m_version = '1.8.1'
 
 if sys.argv[1] == "publish":
     os.system("python3 setup.py sdist")
@@ -28,7 +26,11 @@ else:
     setup(name='LinuxRecycle',
           version=m_version,
           author='Xin-Xin Ma',
+          description="A recycle system for linux",
+          long_description=open("./README.md").read(),
           packages=find_packages(),
+          data_files=[("", ["LICENSE"])],
+          license="GPL",
           project_urls={
               'Source': 'https://github.com/xxmawhu/LinuxRecycle',
           },
