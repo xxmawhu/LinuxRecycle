@@ -17,21 +17,29 @@ import core
 import subprocess
 import sys
 import os
-setup(
-    name='LinuxRecycle',
-    version='1.8.0',
-    author='Xin-Xin Ma',
-    packages=find_packages(),
-    project_urls={
-    'Source': 'https://github.com/xxmawhu/LinuxRecycle',
-	},  
-    entry_points={
-        'console_scripts':['rm=linuxrecycle.main:main', 
-            'rm.printDB=linuxrecycle.printDB:main',
-            'rm.clean=linuxrecycle.auto_clear:main',
-            'rm.recover=linuxrecycle.recover:main']
-        },
-    install_requires=[
-        'termcolor',
-        ]
-)
+
+m_version = '1.8.0'
+
+if sys.argv[1] == "publish":
+    os.system("python3 setup.py sdist")
+    os.system("python3 setup.py bdist_wheel")
+    os.system("twine upload dist/*{}*".format(m_version))
+else:
+    setup(name='LinuxRecycle',
+          version=m_version,
+          author='Xin-Xin Ma',
+          packages=find_packages(),
+          project_urls={
+              'Source': 'https://github.com/xxmawhu/LinuxRecycle',
+          },
+          entry_points={
+              'console_scripts': [
+                  'rm=linuxrecycle.main:main',
+                  'rm.printDB=linuxrecycle.printDB:main',
+                  'rm.clean=linuxrecycle.auto_clear:main',
+                  'rm.recover=linuxrecycle.recover:main'
+              ]
+          },
+          install_requires=[
+              'termcolor',
+          ])
