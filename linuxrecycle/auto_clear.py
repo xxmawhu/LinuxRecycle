@@ -23,9 +23,11 @@ def delete_old_file(raws):
     delete the file in the .trash
     info[2]
     """
+    if raws:
+        print("remove :")
     for info in raws:
         file_name = info[2]
-        # print file_name
+        print(file_name)
         if info[3] != 'd':
             try:
                 os.remove(file_name)
@@ -77,6 +79,8 @@ def main():
         cursor.close()
         conn.close()
     # print rows
+    if not raws:
+        print("[Info] not files are needed to be removed!")
     delete_old_file(raws)
     update(raws)
     # write log
