@@ -45,7 +45,7 @@ else:
 def makeAutoClear():
     mtdbDir = os.path.expanduser('~/.mtdb')
     f = open(mtdbDir + "/clear.py", 'w')
-    f.write("#!/usr/bin/env python\n")
+    f.write("#!/usr/bin/env python3\n")
     f.write("import linuxrecycle.auto_clear as cl\n")
     f.write("cl.main()\n")
     f.close()

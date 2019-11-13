@@ -80,7 +80,7 @@ def main():
         conn.close()
     # print rows
     if not raws:
-        print("[Info] not files are needed to be removed!")
+        print("[Info] no files are needed to be removed!")
     delete_old_file(raws)
     update(raws)
     # write log
