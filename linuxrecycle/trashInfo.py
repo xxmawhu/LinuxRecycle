@@ -15,21 +15,9 @@ import sys
 import os
 from linuxrecycle import argv
 from linuxrecycle.config import local_config
+from linuxrecycle.config import user
 
 def getTrashAddress(afileName):
-    """
-    Warning: the file name can't contain ~, or $USER,
-    please expand them 
-    1. split the name by $USER 
-    2. [0]/$USER/.trash
-    """
-    user = os.environ["USER"]
-    if user in afileName:
-        pp = afileName.split(user)
-        return os.path.join(pp[0], user, '.trash')
-    else:
-        trs="/"+afileName.split("/")[1]+ '/.trash'
-        return trs
 
 
 def inTrash(afileName):

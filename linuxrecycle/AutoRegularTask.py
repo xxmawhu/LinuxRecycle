@@ -15,7 +15,7 @@
 # import sys
 import os
 import subprocess as sp
-
+from linuxrecycle import config.user as user
 
 class AutoRegularTask:
     """
@@ -58,7 +58,6 @@ class AutoRegularTask:
             f.write("{}\n".format(new_command))
         f.close()
         self._tmpFile.append("tmp.txt")
-        user = os.environ["USER"]
         process = sp.Popen(['crontab', '-u', user, "tmp.txt"],
                            stdout=sp.PIPE,
                            stderr=sp.PIPE)

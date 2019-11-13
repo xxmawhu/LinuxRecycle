@@ -30,8 +30,16 @@ else:
             os.path.expanduser("~/.mtdb/fileInfo.db")+',')
     with open(os.path.expanduser('~/.mtdb/mtrc'), 'w') as configFile:
         local_config.write(configFile)
+user = ''
+if "USER" in os.environ:
+    user = os.environ["USER"]
+elif "LOGNAME" in os.environ:
+    user = os.environ['LOGNAME']
+elif 'USERNAME' in os.environ:
+    user = os.environ['USERNAME']
+else:
+    print("Error, can not find USER, LOGNAME, or USERNAME")
 
-user = os.environ["USER"]
 
 
 def makeAutoClear():
