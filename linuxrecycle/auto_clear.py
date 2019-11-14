@@ -66,6 +66,8 @@ def main():
     """
     conn = sqlite3.connect(config.local_config.get('core', 'data_base_file'))
     t0 = time.time() - 3600.0 * 24.0 * config.local_config.getint('core', 'keep_days')
+    print("delete files more than {} days".format(
+        config.local_config.get('core', 'keep_days')))
     # t0 = time.time() - 3600.0 * 24.0 * 1.0  
     # config.local_config.getint('core', 'keep_days')
     query = "SELECT * FROM fileInfo "
