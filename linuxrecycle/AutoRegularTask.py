@@ -15,26 +15,23 @@
 # import sys
 import os
 import subprocess as sp
-from linuxrecycle import config.user as user
+from linuxrecycle import config
+
 
 class AutoRegularTask:
     """
     regular execute a command by `crontab`
     """
+
     def __init__(self):
         self._newCommand = set()
         self._oldCommand = ''
         self._tmpFile = []
 
-    def Add(self, command, hour="3", minute="14", month="*", day="*",
-            week="*"):
+    def Add(self, command, hour="3", minute="14", month="*", day="*", week="*"):
         new_command = "{Minute} {Hour} {Day} {Month} {Week} {Command}".format(
-            Minute=minute,
-            Hour=hour,
-            Command=command,
-            Month=month,
-            Day=day,
-            Week=week)
+            Minute=minute, Hour=hour, Command=command, Month=month, Day=day, Week=week
+        )
         self._newCommand.add(new_command)
 
     def _getOldCrontab(self):
@@ -58,9 +55,7 @@ class AutoRegularTask:
             f.write("{}\n".format(new_command))
         f.close()
         self._tmpFile.append("tmp.txt")
-        process = sp.Popen(['crontab', '-u', user, "tmp.txt"],
-                           stdout=sp.PIPE,
-                           stderr=sp.PIPE)
+        process = sp.Popen(['crontab', '-u', config.user, "tmp.txt"], stdout=sp.PIPE, stderr=sp.PIPE)
         out, err = process.communicate()
 
     def removeTmpFile(self):
@@ -81,4 +76,3 @@ class AutoRegularTask:
         print("setup sucessful!")
         self._getOldCrontab()
         print(self._oldCommand)
-

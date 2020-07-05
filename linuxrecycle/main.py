@@ -21,6 +21,7 @@ rmForce = False
 if '-f' in sys.argv:
     rmForce = True
 
+
 def Rm(afile):
     # rm one file for use of pool.map
     # rm_status is the status of oprater 'mv' or 'rm'
@@ -38,11 +39,12 @@ def obtainAllFile():
         files += glob.glob(i)
     return files
 
+
 def test():
     executor = Pool(local_config.getint('core', 'Num_Processor'))
-    logs  =  executor.map(Rm, ['LinuxRecycle.egg-info', 'build'])
+    logs = executor.map(Rm, ['LinuxRecycle.egg-info', 'build'])
     executor.close()
-    executor.join() 
+    executor.join()
     DB.insertDB(logs)
 
 
@@ -51,11 +53,12 @@ def main():
         logs = list(map(oper.RmForce, obtainAllFile()))
     else:
         logs = list(map(oper.MoveToTrash, obtainAllFile()))
-    logCol = [ ]
+    logCol = []
     for log in logs:
         if log[-1] == "exits":
             logCol.append(log)
     DB.insertDB(logCol)
+
 
 if __name__ == "__main__":
     main()

@@ -16,32 +16,33 @@ from setuptools import find_packages
 import sys
 import os
 
-m_version = '1.8.6'
+m_version = '1.8.9'
 
 if sys.argv[1] == "publish":
     os.system("python3 setup.py sdist")
     os.system("python3 setup.py bdist_wheel")
     os.system("twine upload dist/*{}*".format(m_version))
 else:
-    setup(name='LinuxRecycle',
-          version=m_version,
-          author='Xin-Xin Ma',
-          description="A recycle system for linux",
-          long_description=open("./README.md").read(),
-          packages=find_packages(),
-          data_files=[("", ["LICENSE"])],
-          license="GPL",
-          project_urls={
-              'Source': 'https://github.com/xxmawhu/LinuxRecycle',
-          },
-          entry_points={
-              'console_scripts': [
-                  'rm=linuxrecycle.main:main',
-                  'rm.printDB=linuxrecycle.printDB:main',
-                  'rm.clean=linuxrecycle.auto_clear:main',
-                  'rm.recover=linuxrecycle.recover:main'
-              ]
-          },
-          install_requires=[
-              'termcolor',
-          ])
+    setup(
+        name='LinuxRecycle',
+        version=m_version,
+        author='Xin-Xin Ma',
+        description="A recycle system for linux",
+        long_description=open("./README.md").read(),
+        packages=find_packages(),
+        data_files=[("", ["LICENSE"])],
+        license="GPL",
+        project_urls={
+            'Source': 'https://github.com/xxmawhu/LinuxRecycle',
+        },
+        entry_points={
+            'console_scripts':
+                [
+                    'rm=linuxrecycle.main:main', 'rm.printDB=linuxrecycle.printDB:main',
+                    'rm.clean=linuxrecycle.auto_clear:main', 'rm.recover=linuxrecycle.recover:main'
+                ]
+        },
+        install_requires=[
+            'termcolor',
+        ]
+    )

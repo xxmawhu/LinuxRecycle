@@ -24,10 +24,9 @@ else:
     local_config.set('core', 'Num_Processor', "100")
     local_config.set('core', 'Keep_data_base', "1")
     local_config.set('core', 'keep_days', "30")
-    local_config.set('core', 'data_base_file', 
-            os.path.expanduser("~/.mtdb/fileInfo.db"))
-    local_config.set('core', 'white_files', 
-            os.path.expanduser("~/.mtdb/fileInfo.db")+',')
+    local_config.set('core', "default_trash", os.path.expanduser("~/.trash"))
+    local_config.set('core', 'data_base_file', os.path.expanduser("~/.mtdb/fileInfo.db"))
+    local_config.set('core', 'white_files', os.path.expanduser("~/.mtdb/fileInfo.db") + ',')
     with open(os.path.expanduser('~/.mtdb/mtrc'), 'w') as configFile:
         local_config.write(configFile)
 user = ''
@@ -41,7 +40,6 @@ else:
     print("Error, can not find USER, LOGNAME, or USERNAME")
 
 
-
 def makeAutoClear():
     mtdbDir = os.path.expanduser('~/.mtdb')
     f = open(mtdbDir + "/clear.py", 'w')
@@ -49,6 +47,7 @@ def makeAutoClear():
     f.write("import linuxrecycle.auto_clear as cl\n")
     f.write("cl.main()\n")
     f.close()
+
 
 autoClear = os.path.expanduser('~/.mtdb/clear.py')
 if not os.path.exists(autoClear):
@@ -58,5 +57,6 @@ if __name__ == "__main__":
     print(local_config['core']['Num_Processor'])
     print(local_config['core']['keep_days'])
     print(local_config['core']['data_base_file'])
+    print(local_config['core']['default_trash'])
     print("USER {}".format(user))
 # print local_config.get('core', 'white_file')

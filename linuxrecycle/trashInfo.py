@@ -16,20 +16,31 @@ import os
 from linuxrecycle import argv
 from linuxrecycle.config import local_config
 from linuxrecycle.config import user
+system_dir = [
+    "etc", "bin", "dev", "lib", "lib32", "libx32", "lost+found", "usr", "media", "mnt", "srv", "var"
+]
+
 
 def getTrashAddress(afileName):
     """
     Warning: the file name can't contain ~, or $USER,
-    please expand them 
-    1. split the name by $USER 
+    please expand them
+    1. split the name by $USER
     2. [0]/$USER/.trash
+    3. begin with 'etc', 'src'
     """
+    afileName = os.path.abspath(afileName)
+    file_head = afileName[1:].split('/')[0]
+
+    # case 3
+    if file_head in system_dir:
+        return local_config['core']['default_trash']
+
     if user in afileName:
         pp = afileName.split(user)
         return os.path.join(pp[0], user, '.trash')
-    else:
-        trs="/"+afileName.split("/")[1]+ '/.trash'
-        return trs
+    trs = "/" + afileName.split("/")[1] + '/.trash'
+    return trs
 
 
 def inTrash(afileName):
@@ -43,6 +54,7 @@ def inTrash(afileName):
     if tak in afileName:
         return True
     return False
+
 
 def tmpFile(afileName):
     """
