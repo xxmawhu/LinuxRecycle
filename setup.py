@@ -16,7 +16,7 @@ from setuptools import find_packages
 import sys
 import os
 
-m_version = '1.8.9'
+m_version = '1.9.2'
 
 if sys.argv[1] == "publish":
     os.system("python3 setup.py sdist")
