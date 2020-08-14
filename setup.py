@@ -16,7 +16,7 @@ from setuptools import find_packages
 import sys
 import os
 
-m_version = '1.8.9'
+m_version = '1.9.0'
 
 if sys.argv[1] == "publish":
     os.system("python3 setup.py sdist")
@@ -38,8 +38,8 @@ else:
         entry_points={
             'console_scripts':
                 [
-                    'rm=linuxrecycle.main:main', 'rm.printDB=linuxrecycle.printDB:main',
-                    'rm.clean=linuxrecycle.auto_clear:main', 'rm.recover=linuxrecycle.recover:main'
+                    'del=linuxrecycle.main:main', 'del.printDB=linuxrecycle.printDB:main',
+                    'del.clean=linuxrecycle.auto_clear:main', 'del.recover=linuxrecycle.recover:main'
                 ]
         },
         install_requires=[
