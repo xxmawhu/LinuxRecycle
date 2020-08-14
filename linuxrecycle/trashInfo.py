@@ -16,9 +16,7 @@ import os
 from linuxrecycle import argv
 from linuxrecycle.config import local_config
 from linuxrecycle.config import user
-system_dir = [
-    "etc", "bin", "dev", "lib", "lib32", "libx32", "lost+found", "usr", "media", "mnt", "srv", "var"
-]
+system_dir = ["etc", "bin", "dev", "lib", "lib32", "libx32", "lost+found", "usr", "mnt", "srv", "var"]
 
 
 def getTrashAddress(afileName):
@@ -30,11 +28,18 @@ def getTrashAddress(afileName):
     3. begin with 'etc', 'src'
     """
     afileName = os.path.abspath(afileName)
+    # print(afileName)
     file_head = afileName[1:].split('/')[0]
+    # print('head', file_head)
 
     # case 3
     if file_head in system_dir:
         return local_config['core']['default_trash']
+    elif file_head == 'media':
+        ll = afileName[1:].split('/')[:3]
+        # pint(ll)
+        ll.append('.trash')
+        return os.path.join(ll)
 
     if user in afileName:
         pp = afileName.split(user)

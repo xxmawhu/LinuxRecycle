@@ -74,6 +74,8 @@ def MoveToTrash(address):
             return (address, trashAddress, Type, time.time(), date, exits)
         except PermissionError as e:
             print(e)
+            if e.errno == 2:
+                print(e)
             return (address, address, Type, time.time(), date, exits)
         except IOError as e:
             print(e)
