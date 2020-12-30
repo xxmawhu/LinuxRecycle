@@ -61,11 +61,7 @@ the disk. Such as the disk is /data, the trash folder will be /data/.trash or /d
 
 
 ## setup your crontab
+* `crontab -e`
 ```
-14 4 * * * python /pathto/auto_clear.py
-```
-```sh
-git clone https://github.com/xxmawhu/LinuxRecycle.git
-cd LinuxRecycle/core
-python3 setCrontab.py
+14 4 * * * python ~/.mtdb/clear.py
 ```
