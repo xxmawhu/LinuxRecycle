@@ -15,7 +15,7 @@ pip install LinuxRecycle [--user]
 ```
 del [options] filename
 ```
-> * -f remove the file or dictory forcely
+> * -f remove the file or dictory forcely without backing up.
 
 * Show all files which have been deleted
 ```
