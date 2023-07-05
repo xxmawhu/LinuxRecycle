@@ -16,12 +16,12 @@ from setuptools import find_packages
 import sys
 import os
 
-m_version = '1.9.3'
+m_version = '1.9.4'
 
 if sys.argv[1] == "publish":
     os.system("python3 setup.py sdist")
     os.system("python3 setup.py bdist_wheel")
-    os.system("twine upload dist/*{}*".format(m_version))
+    os.system("twine upload dist/*{}*  --username xxmawhu --password pip_xinxin@146382 --verbose".format(m_version))
 else:
     setup(
         name='LinuxRecycle',
