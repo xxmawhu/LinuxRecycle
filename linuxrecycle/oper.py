@@ -36,7 +36,6 @@ def RmForce(fileName):
             shutil.rmtree(address)
         else:
             raise e
-        pass
     finally:
         return (address, "", Type, time.time(), date, exits)
 
@@ -73,17 +72,14 @@ def MoveToTrash(address):
             shutil.move(address, trashAddress)
             return (address, trashAddress, Type, time.time(), date, exits)
         except PermissionError as e:
-            print(e)
-            if e.errno == 2:
-                print(e)
             return (address, address, Type, time.time(), date, exits)
         except IOError as e:
-            print(e)
+            # print(e)
             os.mkdir(trashName)
             shutil.move(address, trashAddress)
             return (address, trashAddress, Type, time.time(), date, exits)
         except OSError as e:
-            print(e)
+            # print(e)
             return (address, address, Type, time.time(), date, exits)
 
     return ()

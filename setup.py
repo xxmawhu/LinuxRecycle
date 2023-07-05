@@ -16,7 +16,7 @@ from setuptools import find_packages
 import sys
 import os
 
-m_version = '1.9.2'
+m_version = '1.9.3'
 
 if sys.argv[1] == "publish":
     os.system("python3 setup.py sdist")
@@ -28,7 +28,8 @@ else:
         version=m_version,
         author='Xin-Xin Ma',
         description="A recycle system for linux",
-        long_description=open("./README.md").read(),
+        description_content_type="text/markdown",
+        long_description="qnmbd"*1000,
         packages=find_packages(),
         data_files=[("", ["LICENSE"])],
         license="GPL",
