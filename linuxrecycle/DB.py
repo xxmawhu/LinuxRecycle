@@ -20,23 +20,38 @@ some functions to operate the data base
 import sqlite3
 from sqlite3 import OperationalError
 import os
+
 # import time
 from linuxrecycle.config import local_config
+
 query = """
 CREATE TABLE IF NOT EXISTS fileInfo
-(id INTEGER PRIMARY KEY, 
- address text, 
+(id INTEGER PRIMARY KEY,
+ address text,
  trashAddress text, type text,
 time real, date text, exits text)
 """
 
+
+def conn_to_db(data_base_file):
+    try:
+        data_base_file = os.path.expanduser(data_base_file)
+        if not os.path.exists(data_base_file):
+            raise OperationalError(f"no such file: {data_base_file}")
+        conn = sqlite3.connect(data_base_file, timeout=30.0)
+        return conn
+    except Exception as e:
+        print(f"connect to `{data_base_file}` failed", e)
+        raise
+
+
 # @profile
 def initDB():
-    conn = sqlite3.connect(local_config.get('core', 'data_base_file'))
+    conn = conn_to_db(local_config.get("core", "data_base_file"))
     try:
         cursor = conn.cursor()
         cursor.execute(query)
-        cursor.execute("CREATE index  fileInfoIndex on fileInfo(id) ")
+        cursor.execute("CREATE INDEX IF NOT EXISTS fileInfoIndex ON fileInfo(id);")
         conn.commit()
     # except Exception:
     #    pass
@@ -47,7 +62,7 @@ def initDB():
 
 # @profile
 def lastID():
-    conn = sqlite3.connect(local_config.get('core', 'data_base_file'), timeout=30.0)
+    conn = conn_to_db(local_config.get("core", "data_base_file"))
     ID = 0
     try:
         cursor = conn.cursor()
@@ -68,9 +83,9 @@ def insertDB(information):
     IDinfo = []
     for indx, item in enumerate(information):
         # print "id:", indx, "item",  item
-        IDinfo.append((ID + indx, ) + item)
-    conn = sqlite3.connect(local_config.get('core', 'data_base_file') )
-    insertmt = 'INSERT INTO fileInfo VALUES(?, ?, ?, ?, ?, ?, ?)'
+        IDinfo.append((ID + indx,) + item)
+    conn = conn_to_db(local_config.get("core", "data_base_file"))
+    insertmt = "INSERT INTO fileInfo VALUES(?, ?, ?, ?, ?, ?, ?)"
     # print IDinfo
     cursor = conn.cursor()
     cursor.execute("begin transaction")
@@ -97,20 +112,18 @@ def getAllInf():
     """
     get all information from the data base
     """
-    con = sqlite3.connect(local_config.get('core', 'data_base_file'),
-                          timeout=30.0)
+    con = conn_to_db(local_config.get("core", "data_base_file"))
     cursor = con.cursor()
     cursor = con.execute("SELECT * FROM fileInfo")
     rows = cursor.fetchall()
     return rows
 
 
-def getLastRecord(n, condition=''):
+def getLastRecord(n, condition=""):
     """
     get the record of last #n
     """
-    con = sqlite3.connect(local_config.get('core', 'data_base_file'),
-                          timeout=30.0)
+    con = conn_to_db(local_config.get("core", "data_base_file"))
     cursor = con.cursor()
     sel_commond = "SELECT * FROM fileInfo"
     if condition:
@@ -127,9 +140,9 @@ def getLastRecord(n, condition=''):
 
 def get_record_by_id(ID):
     """
-    get the record with certain ID 
+    get the record with certain ID
     """
-    con = sqlite3.connect(local_config.get('core', 'data_base_file'))
+    con = conn_to_db(local_config.get("core", "data_base_file"))
     try:
         cursor = con.cursor()
         cursor.execute("SELECT * FROM fileInfo WHERE id = {}".format(ID))
@@ -141,9 +154,8 @@ def get_record_by_id(ID):
 
 
 def clearDB():
-    con = sqlite3.connect(local_config.get('core', 'data_base_file'),
-                          timeout=30.0)
     delQuery = "DELETE from fileInfo"
+    con = conn_to_db(local_config.get("core", "data_base_file"))
     try:
         cursor = con.cursor()
         cursor.execute(delQuery)
@@ -157,16 +169,15 @@ def clearDB():
 def delByID(Id):
     """
     Args:
-        Id: the Index the the one creod 
+        Id: the Index the the one creod
     return:
         void
     """
-    con = sqlite3.connect(local_config.get('core', 'data_base_file'),
-                          timeout=30.0)
+    con = conn_to_db(local_config.get("core", "data_base_file"))
     try:
         cursor = con.cursor()
         delQuery = "DELETE from fileInfo WHERE id=?"
-        cursor.execute(delQuery, (Id, ))
+        cursor.execute(delQuery, (Id,))
         con.commit()
     # except Exception as e:
     #    print "fun<delByID>", e
@@ -175,10 +186,10 @@ def delByID(Id):
 
 
 # initi the fileInfo.config.db
-if not os.path.isfile(local_config.get('core', 'data_base_file')):
+if not os.path.isfile(local_config.get("core", "data_base_file")):
     initDB()
 if __name__ == "__main__":
-    if not os.path.isfile(local_config.get('core', 'data_base_file')):
+    if not os.path.isfile(local_config.get("core", "data_base_file")):
         initDB()
     print(lastID())
     exit()
