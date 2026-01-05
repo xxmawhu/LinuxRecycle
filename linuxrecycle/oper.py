@@ -23,16 +23,17 @@ def RmForce(fileName):
     """
     if -f in opt, rm the file directly
     """
+    fileName = os.path.expanduser(fileName)
     address = os.path.abspath(fileName)
     exits = "removed"
-    Type = 'f'
+    Type = "f"
     date = time.strftime("%Y-%m-%d:%H:%M:%S", time.localtime())
     try:
         os.remove(address)
     except OSError as e:
         # [Error 21] Is directory: ...
         if e.args[0] == 21:
-            Type = 'd'
+            Type = "d"
             shutil.rmtree(address)
         else:
             raise e
@@ -40,7 +41,7 @@ def RmForce(fileName):
         return (address, "", Type, time.time(), date, exits)
 
 
-#@profile
+# @profile
 def MoveToTrash(address):
     """
     Warning: the file must be an exact file or directory. The following cases
@@ -49,14 +50,15 @@ def MoveToTrash(address):
     staus will be returned, like
     (address, trashAddress, type, time, date, exits)
     """
+    address = os.path.expanduser(address)
     address = os.path.abspath(address)
     # print("address :", address)
     trashName = trashInfo.getTrashAddress(address)
     # print("trash name: " + trashName)
     exits = "exits"
-    Type = 'f'
+    Type = "f"
     if os.path.isdir(address):
-        Type = 'd'
+        Type = "d"
     date = time.strftime("%y%m%d_%H%M%S", time.localtime())
     if trashInfo.inTrash(address) or trashInfo.tmpFile(address):
         exits = "removed"
