@@ -1,22 +1,24 @@
 #!/usr/bin/env python
 # encoding: utf-8
-# ====================================================
-#   Copyright (C)2019 All rights reserved.
-#
-#   Author        : Xin-Xin MA
-#   Email         : xxmawhu@163.com
-#   File Name     : trashInfo.py
-#   Created Time  : 2019-09-19 15:05
-#   Last Modified : 2019-09-19 19:46
-#   Describe      :
-#
-# ====================================================
-import sys
 import os
+import sys
 from linuxrecycle import argv
 from linuxrecycle.config import local_config
 from linuxrecycle.config import user
-system_dir = ["etc", "bin", "dev", "lib", "lib32", "libx32", "lost+found", "usr", "mnt", "srv", "var"]
+
+system_dir = [
+    "etc",
+    "bin",
+    "dev",
+    "lib",
+    "lib32",
+    "libx32",
+    "lost+found",
+    "usr",
+    "mnt",
+    "srv",
+    "var",
+]
 
 
 def getTrashAddress(afileName):
@@ -29,22 +31,22 @@ def getTrashAddress(afileName):
     """
     afileName = os.path.abspath(afileName)
     # print(afileName)
-    file_head = afileName[1:].split('/')[0]
+    file_head = afileName[1:].split("/")[0]
     # print('head', file_head)
 
     # case 3
     if file_head in system_dir:
-        return local_config['core']['default_trash']
-    elif file_head == 'media':
-        ll = afileName[1:].split('/')[:3]
+        return local_config["core"]["default_trash"]
+    elif file_head == "media":
+        ll = afileName[1:].split("/")[:3]
         # pint(ll)
-        ll.append('.trash')
+        ll.append(".trash")
         return os.path.join(ll)
 
     if user in afileName:
         pp = afileName.split(user)
-        return os.path.join(pp[0], user, '.trash')
-    trs = "/" + afileName.split("/")[1] + '/.trash'
+        return os.path.join(pp[0], user, ".trash")
+    trs = "/" + afileName.split("/")[1] + "/.trash"
     return trs
 
 
@@ -55,7 +57,7 @@ def inTrash(afileName):
     Once found ${USER}/.trash in the path, then the path is determined within
     a trash
     """
-    tak = '/.trash/'
+    tak = "/.trash/"
     if tak in afileName:
         return True
     return False
@@ -66,7 +68,7 @@ def tmpFile(afileName):
     True if the file is fileInfo.db
     """
     tak = afileName.split("/")[1]
-    if afileName in ['tmp']:
+    if afileName in ["tmp"]:
         return True
     return False
 
@@ -76,7 +78,7 @@ def whiteFile(afileName):
     True if the in /tmp/...
     """
     tak = afileName.split("/")[1]
-    if tak in local_config['core']['white_files'].split(','):
+    if tak in local_config["core"]["white_files"].split(","):
         return True
     return False
 

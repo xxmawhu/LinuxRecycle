@@ -53,8 +53,7 @@ def MoveToTrash(address):
     address = os.path.expanduser(address)
     address = os.path.abspath(address)
     # print("address :", address)
-    trashName = trashInfo.getTrashAddress(address)
-    # print("trash name: " + trashName)
+    trash_dir_name = trashInfo.getTrashAddress(address)
     exits = "exits"
     Type = "f"
     if os.path.isdir(address):
@@ -67,7 +66,7 @@ def MoveToTrash(address):
     if trashInfo.whiteFile(address):
         return (address, address, Type, time.time(), date, exits)
     else:
-        trashAddress = os.path.join(trashName, address.split("/")[-1] + "." + date)
+        trashAddress = os.path.join(trash_dir_name, address.split("/")[-1] + "." + date)
         # print("Address in trash : ", trashAddress)
         # print("mv  {} {}".format(address, trashAddress))
         try:
@@ -76,8 +75,7 @@ def MoveToTrash(address):
         except PermissionError as e:
             return (address, address, Type, time.time(), date, exits)
         except IOError as e:
-            # print(e)
-            os.mkdir(trashName)
+            os.mkdir(trash_dir_name)
             shutil.move(address, trashAddress)
             return (address, trashAddress, Type, time.time(), date, exits)
         except OSError as e:

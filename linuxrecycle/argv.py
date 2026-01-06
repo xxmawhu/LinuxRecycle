@@ -15,12 +15,8 @@
 core: set the numbers of processes
 """
 import sys
+
 opt = []
 argv = []
 core = 200
-tmpFile = ['tmp']
-#for i in sys.argv[1:]:
-#    if i[0] == '-':
-#        opt.append(i)
-#    else:
-#        argv.append(i)
+tmpFile = ["tmp"]

@@ -36,8 +36,6 @@ time real, date text, exits text)
 def conn_to_db(data_base_file):
     try:
         data_base_file = os.path.expanduser(data_base_file)
-        if not os.path.exists(data_base_file):
-            raise OperationalError(f"no such file: {data_base_file}")
         conn = sqlite3.connect(data_base_file, timeout=30.0)
         return conn
     except Exception as e:
@@ -45,7 +43,6 @@ def conn_to_db(data_base_file):
         raise
 
 
-# @profile
 def initDB():
     conn = conn_to_db(local_config.get("core", "data_base_file"))
     try:

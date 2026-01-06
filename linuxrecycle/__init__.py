@@ -12,7 +12,13 @@
 #
 # ====================================================
 __all__ = [
-    'DB', 'config', 'oper', 'auto_clear', 'main', 'printDB', 'recover',
-    'trashInfo'
+    "DB",
+    "config",
+    "oper",
+    "auto_clear",
+    "main",
+    "printDB",
+    "recover",
+    "trashInfo",
 ]
-from linuxrecycle import *
+from . import *

@@ -1,16 +1,5 @@
 #!/usr/bin/env python3
 # encoding: utf-8
-# ====================================================
-#   Copyright (C)2019 All rights reserved.
-#
-#   Author        : Xin-Xin MA
-#   Email         : xxmawhu@163.com
-#   File Name     : config.py
-#   Created Time  : 2019-09-19 23:52
-#   Last Modified : 2019-09-26 16:00
-#   Describe      :
-#
-# ====================================================
 import os
 from configparser import ConfigParser
 
